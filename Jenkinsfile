@@ -1,11 +1,14 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'maven:3.9.6-eclipse-temurin-17'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     stages {
         stage('Build') {
             steps {
-                git credentialsId: 'github-token',
-                    url: 'https://github.com/HemanthKalyan18/SpringBootDemo.git'
                 sh 'mvn clean package'
             }
         }
